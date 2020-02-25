@@ -1,0 +1,3 @@
+[submodule "source/raspberrypi_gpio"]
+	path = source/raspberrypi_gpio
+	url = git@github.com:cpu150/raspberrypi_gpio.git
