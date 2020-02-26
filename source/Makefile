@@ -1,6 +1,6 @@
 CC					:= g++ --std=c++11
 CCFLAGS			:= -Wall
-LDFLAGS 		:= -lrt -lpthread -lbcm2835
+LDFLAGS 		:= -lbcm2835
 DEBUGFLAGS	:= -DDEBUG
 
 TARGETS	:= main
