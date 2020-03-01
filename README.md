@@ -1,8 +1,8 @@
 # INTRODUCTION
 The purpose of this project is to manage lights and other systems (water levels, heater, solar panels, etc.) in a van running on a 12 volts battery<br />
 It runs on a [Raspberry Pi Zero W](https://www.raspberrypi.org/products/raspberry-pi-zero-w/) and uses the [GPIO port](https://pinout.xyz/) to interface with the electronic components<br />
-There is a basic schema there: `electronic/schema.pdf`<br />
-The code is written in C++ and use [*raspberrypi_gpio* project](https://github.com/cpu150/raspberrypi_gpio) which is a C++ wrapper around the [*bcm2835* library](http://www.airspayce.com/mikem/bcm2835)
+There is a basic [electronic schema](https://github.com/cpu150/raspberrypi_van/blob/master/electronic/schema.pdf)<br />
+The code is written in C++ and use [raspberrypi_gpio](https://github.com/cpu150/raspberrypi_gpio) project which is a C++ wrapper around the [bcm2835](http://www.airspayce.com/mikem/bcm2835) library
 
 # DEPENDENCIES
 ## `RASPBERRYPI_GPIO` GIT REPOSITORY
