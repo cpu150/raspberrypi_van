@@ -1,12 +1,18 @@
-CC					:= g++ --std=c++11
-CCFLAGS			:= -Wall
-LDFLAGS 		:= -lbcm2835
-DEBUGFLAGS	:= -DDEBUG
+CC              := g++ --std=c++11
+CCFLAGS         := -Wall
+LDFLAGS         := -lbcm2835
+DEBUGFLAGS      := -DDEBUG
 
-TARGETS	:= main
-MAINS		:= $(addsuffix .o, $(TARGETS) )
-OBJ			:= raspberrypi_gpio/Gpio.o Van.o $(MAINS)
-DEPS		:=
+TARGETS         := main
+MAINS           := $(addsuffix .o, $(TARGETS) )
+OBJ             := raspberrypi_gpio/Gpio.o Van.o $(MAINS)
+DEPS            :=
+
+INSTALL_BIN     := van
+INSTALL_PATH    := /usr/local/bin/$(INSTALL_BIN)
+LOG_OUT         := /var/log/van.log
+LOG_ERR         := /var/log/van_err.log
+CRONJOB         := @reboot /usr/local/bin/van >>$(LOG_OUT) 2>>$(LOG_ERR)
 
 .PHONY: all clean install uninstall
 
@@ -19,17 +25,15 @@ clean:
 	rm -f $(TARGETS) $(OBJ)
 
 install:
-	sudo cp main /usr/local/bin/van
-	sudo cp ../init.d/van /etc/init.d/
-	sudo chmod 755 /etc/init.d/van
-	sudo update-rc.d van defaults
-	echo "To start the service manually: sudo /etc/init.d/van start"
+	sudo cp $(TARGETS) $(INSTALL_PATH)
+	sudo touch $(LOG_OUT) ; sudo touch $(LOG_ERR)
+	sudo crontab -l | { cat; echo "$(CRONJOB)"; } | sudo crontab -
+	echo "Reboot required"
 
 uninstall:
-	sudo /etc/init.d/van stop
-	sudo rm /usr/local/bin/van
-	sudo rm /etc/init.d/van
-	sudo update-rc.d -f van remove
+	sudo killall $(INSTALL_BIN)
+	sudo rm $(INSTALL_PATH)
+	sudo crontab -l | grep -v -F "$(CRONJOB)" | sudo crontab -
 
 $(OBJ): %.o : %.cpp $(DEPS)
 	$(CC) -c -o $@ $< $(CCFLAGS)
