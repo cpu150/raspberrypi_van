@@ -1,3 +1,5 @@
 [submodule "source/raspberrypi_gpio"]
 	path = source/raspberrypi_gpio
-	url = git@github.com:cpu150/raspberrypi_gpio.git
+	url = https://github.com/cpu150/raspberrypi_gpio.git
+	# Read write access with ssh key
+	#url = git@github.com:cpu150/raspberrypi_gpio.git
